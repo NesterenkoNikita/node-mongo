@@ -303,3 +303,55 @@ try {
 ## Mongo Service
 
 Mongo Service extends [Mongo Query Service](#mongo-query-service), therefore instance of this service has all methods of the [Mongo Query Service](#mongo-query-service).
+
+### `once(eventName, handler)`
+
+Subscribe to database change events only once. The first time evenName is triggered listener handler is removed and then invoked.
+
+#### Arguments:
+- `eventName` - *(String)* name of the database event
+- `handler` - *(function)* function event handler
+
+#### Returns:
+Returns a reference to the `EventEmitter`.
+
+#### Example:
+```javascript
+const usersService = db.createService('users');
+userService.once('updated', ({ doc, prevDoc }) => {
+});
+```
+
+### `on(eventName, handler)`
+
+Subscribe to database change events.
+
+#### Arguments:
+- `eventName` - *(String)* name of the database event
+- `handler` - *(function)* function event handler
+
+#### Returns:
+Returns a reference to the `EventEmitter`.
+
+#### Example:
+```javascript
+const usersService = db.createService('users');
+userService.on('updated', ({ doc, prevDoc }) => {
+});
+```
+
+### `create(objects)`
+
+Async function that insert one object or array of the objects to the database. Publishes `created` event {doc}. Sets createdOn to the current date.
+
+#### Arguments:
+- `objects` - *(Object[]|Object)* Object or array of objects to create
+
+#### Returns:
+Object or array of created objects
+
+#### Example:
+```javascript
+const usersService = db.createService('users');
+await userService.create([{ name: 'Bob' }, { name: 'Alice' }]);
+```

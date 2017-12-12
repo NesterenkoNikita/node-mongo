@@ -36,7 +36,6 @@ const usersService = db.createService('users');
 // 1. emit updated, created and removed events
 // 2. Load and save entire object
 
-await userService.create([{ name: 'Bob' }, { name: 'Alice' }]);
 await usersService.update({ _id: '1'}, (doc) => {
   doc.name = 'Alex';
 });
@@ -61,14 +60,6 @@ await usersService.findOneAndUpdate({ name: 'Bob'}, {
   $set: {
     name: 'Alice',
   },
-});
-
-// Subscribe to service change events:
-userService.on('updated', ({ doc, prevDoc }) => {
-});
-userService.on('created', ({ doc, prevDoc }) => {
-});
-userService.on('removed', ({ doc, prevDoc }) => {
 });
 
 // Listen to the value changes between original and updated document
